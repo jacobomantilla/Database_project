@@ -39,6 +39,7 @@ public class exec {
             System.out.println("Unkown Error:" + e.getMessage());
         }
     }
+    
         public static DefaultTableModel buildTableModel(ResultSet rs)
         throws SQLException {
         
