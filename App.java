@@ -13,7 +13,7 @@ public class App {
             //Creating the Frame
             JFrame frame = new JFrame("Database GUI");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(700, 700);
+            //frame.setSize(700, 700);
             // Creating the MenuBar and adding components
             JMenuBar mb = new JMenuBar();
             JMenu m1 = new JMenu("FILE");
@@ -27,13 +27,20 @@ public class App {
 
 
             //Create the text area for user to input queries
+            JPanel queryPanel = new JPanel(new BorderLayout());
             JTextArea queryInput = new JTextArea();
+            JButton submit = new JButton("Submit");
+            queryInput.setLineWrap(true);
+            JScrollPane scrollPaneRight = new JScrollPane(queryInput);
+            queryPanel.add(scrollPaneRight, BorderLayout.CENTER);
+            queryPanel.add(submit, BorderLayout.PAGE_END);
 
 
             //Set up table list with hard coded values for the tables in the project
             String[] tableNames = {"db_book.csv", "db_customer.csv", "db_employee.csv",
                                     "db_order_detail.csv", "db_order.csv", "db_shipper.csv", "db_subject.csv","db_supplier.csv"};
             JList<String> tableList = new JList<String>(tableNames);
+            JScrollPane scrollPaneLeft = new JScrollPane(tableList);
 
                 
             //Set up table display with hard coded values from db_book.csv
@@ -41,19 +48,21 @@ public class App {
 
             TableModel dataModel = new AbstractTableModel() {
                 public int getColumnCount() { return 7; }
-                public int getRowCount() { return 9;}
-                public Object getValueAt(int row, int col) { return tableDataMatrix[row][col]; }
+                public int getRowCount() { return 8;}
+                public Object getValueAt(int row, int col) { return tableDataMatrix[row+1][col]; }
+                public String getColumnName(int col) {return tableDataMatrix[0][col];}
             };
             JTable outputTable = new JTable(dataModel);
-            JButton submit = new JButton("Submit");
-            outputTable.add(submit);
+            JScrollPane scrollPaneBottom = new JScrollPane(outputTable);
+        
 
             
             //creating the left and right split panes
-            JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, tableList, queryInput);
-            JSplitPane splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPane, outputTable);
+            JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, scrollPaneLeft, queryPanel);
+            splitPane.setDividerLocation(300);
+            JSplitPane splitPane2 = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPane, scrollPaneBottom);
+            splitPane2.setDividerLocation(400);
             splitPane.setOneTouchExpandable(true);
-            splitPane.setDividerLocation(250);
     
             // Creating the panel at bottom and adding components
             // JPanel panel = new JPanel();
@@ -65,7 +74,7 @@ public class App {
             frame.add(splitPane2, BorderLayout.CENTER);
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-            frame.setSize(500, 500);
+            frame.setSize(700, 700);
             frame.setVisible(true);
             
             //Adding Components to the frame.
@@ -84,6 +93,13 @@ public class App {
             // panel.add(tf);
             // panel.add(send);
             // panel.add(reset);
+
+            //handling the input from the textbox 
+            // queryInput.addKeyListener(l);
+            //     String queryInput.getText()
+            //handling the input from the JList elements
+
+            //building the table according to the elements fetched from the keyboard
         }
     }
 
