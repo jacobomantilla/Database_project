@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.BorderLayout;
-//import java.awt.event.*;
+import java.awt.event.*;
 import java.util.*;
+import javax.swing.event.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
@@ -13,18 +14,6 @@ public class App {
             //Creating the Frame
             JFrame frame = new JFrame("Database GUI");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            //frame.setSize(700, 700);
-            // Creating the MenuBar and adding components
-            JMenuBar mb = new JMenuBar();
-            JMenu m1 = new JMenu("FILE");
-            JMenu m2 = new JMenu("Help");
-            mb.add(m1);
-            mb.add(m2);
-            JMenuItem m11 = new JMenuItem("Open");
-            JMenuItem m22 = new JMenuItem("Save as");
-            m1.add(m11);
-            m1.add(m22);
-
 
             //Create the text area for user to input queries
             JPanel queryPanel = new JPanel(new BorderLayout());
@@ -76,23 +65,30 @@ public class App {
 
             frame.setSize(700, 700);
             frame.setVisible(true);
-            
-            //Adding Components to the frame.
-            // frame.getContentPane().add(BorderLayout.SOUTH, panel);
-            // frame.getContentPane().add(BorderLayout.NORTH, mb);
-            // frame.getContentPane().add(BorderLayout.CENTER, splitPane);
-            // frame.setVisible(true);
+
             // Handling Button Click Event
-            // send.addActionListener(new ActionListener() {
-            //     @Override
-            //     public void actionPerformed(ActionEvent e) {
-            //         //ta.setText(tf.getText());
-            //     }
-            // });
-            // panel.add(label); // Components Added using Flow Layout
-            // panel.add(tf);
-            // panel.add(send);
-            // panel.add(reset);
+            submit.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    //save the data in the text field to fetch data from DB
+                    String databaseQuery = queryInput.getText();
+                    queryInput.setText("");
+                    //call function to get tables from the DB using the query input
+                    //throw an exception if the query includes the keyword DROP
+                    
+                }
+            });
+
+            //Handling table selection from left panel
+            tableList.addListSelectionListener(new ListSelectionListener() {
+
+                @Override public void valueChanged(ListSelectionEvent arg0) {
+                    System.out.println(tableList.getSelectedValue());
+                    //get selected value and give SQL command to switch to that table
+                    //display the switch below in a table
+                }
+            });
+           
 
             //handling the input from the textbox 
             // queryInput.addKeyListener(l);
