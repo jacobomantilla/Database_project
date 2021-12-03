@@ -1,15 +1,23 @@
 import javax.swing.*;
 import java.awt.BorderLayout;
 import java.awt.event.*;
-import java.util.*;
+import java.sql.ResultSet;
+
+//import java.util.*;
 import javax.swing.event.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableModel;
 
+//import package DATABASE_PROJECT;
+
 
 
 public class App {
+    
         public static void main(String[] args) throws Exception {
+            //initialize db connection
+            exec myExec = new exec("jacobo", "3306", "free");
+            
 
             //Creating the Frame
             JFrame frame = new JFrame("Database GUI");
@@ -26,8 +34,8 @@ public class App {
 
 
             //Set up table list with hard coded values for the tables in the project
-            String[] tableNames = {"db_book.csv", "db_customer.csv", "db_employee.csv",
-                                    "db_order_detail.csv", "db_order.csv", "db_shipper.csv", "db_subject.csv","db_supplier.csv"};
+            String[] tableNames = {"db_book", "db_customer", "db_employee",
+                                    "db_order_detail", "db_order", "db_shipper", "db_subject","db_supplier"};
             JList<String> tableList = new JList<String>(tableNames);
             JScrollPane scrollPaneLeft = new JScrollPane(tableList);
 
@@ -71,7 +79,7 @@ public class App {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     //save the data in the text field to fetch data from DB
-                    String databaseQuery = queryInput.getText();
+                    //String databaseQuery = queryInput.getText();
                     queryInput.setText("");
                     //call function to get tables from the DB using the query input
                     /*make a function that takes string query input, executes it in Maria,
@@ -86,12 +94,12 @@ public class App {
             tableList.addListSelectionListener(new ListSelectionListener() {
 
                 @Override public void valueChanged(ListSelectionEvent arg0) {
-                    System.out.println(tableList.getSelectedValue());
-                    //get selected value and give SQL command to switch to that table
-                    //display the switch below in a table
+                    System.out.println(tableList.getSelectedValue().toString());
+                    String tableName = tableList.getSelectedValue().toString();
+                    String query = "SELECT * FROM " + tableName;
+                    ResultSet rs = myExec.getQueryData(query);
                 }
             });
-           
 
             //handling the input from the textbox 
             // queryInput.addKeyListener(l);
@@ -99,6 +107,7 @@ public class App {
             //handling the input from the JList elements
 
             //building the table according to the elements fetched from the keyboard
-        }
+        
     }
+}
 
