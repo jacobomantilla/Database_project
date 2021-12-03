@@ -74,6 +74,9 @@ public class App {
                     String databaseQuery = queryInput.getText();
                     queryInput.setText("");
                     //call function to get tables from the DB using the query input
+                    /*make a function that takes string query input, executes it in Maria,
+                         and returns the resulting dataset.
+                         Then use that dataset in order to populate the table with next commands*/
                     //throw an exception if the query includes the keyword DROP
                     
                 }
